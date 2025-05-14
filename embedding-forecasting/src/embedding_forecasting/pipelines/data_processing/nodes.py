@@ -1,34 +1,47 @@
-"""
-This is a boilerplate pipeline 'data_processing'
-generated using Kedro 0.19.12
-"""
 import pandas as pd
-from typing import Dict, List
+from typing import Tuple
+
+
+def split_train_val_test(
+    df: pd.DataFrame, validation_fraction: float, test_fraction: float
+) -> Tuple[pd.DataFrame, pd.DataFrame, pd.DataFrame]:
+    """
+    Split `df` into train, validation, and test sets.
+
+    Args:
+        df: full DataFrame
+        validation_fraction: fraction of data to reserve for validation
+        test_fraction: fraction of data to reserve for testing
+
+    Returns:
+        Tuple of (train_df, val_df, test_df)
+    """
+    n = len(df)
+    # Compute split indices
+    test_size = int(n * test_fraction)
+    val_size = int(n * validation_fraction)
+    train_size = n - val_size - test_size
+
+    train_df = df.iloc[:train_size].reset_index(drop=True)
+    val_df = df.iloc[train_size: train_size + val_size].reset_index(drop=True)
+    test_df = df.iloc[train_size + val_size:].reset_index(drop=True)
+    return train_df, val_df, test_df
 
 
 def _create_windows(df: pd.DataFrame, window_size: int) -> pd.DataFrame:
-    series = df['price_close'].astype('float32')
-
+    series = df["price_close"].astype("float32")
     windows = []
     for i in range(len(series) - window_size + 1):
         window = series.iloc[i : i + window_size]
         mu = window.mean()
-        sigma = window.std()
-        if sigma < 1e-8:
-            sigma = 1e-8  # avoid division by zero
-        # z-score normalization
-        normed = (window - mu) / sigma
-        windows.append(normed.values)
-
-    # Create column names for each time step
+        sigma = window.std() if window.std() >= 1e-8 else 1e-8
+        windows.append(((window - mu) / sigma).values)
     cols = [f"t{i}" for i in range(window_size)]
-    # Construct and return a DataFrame
     return pd.DataFrame(windows, columns=cols)
 
 
-def create_multiple_windows(df: pd.DataFrame, window_sizes: List[int]) -> List[pd.DataFrame]:
-    """
-    Generate a list of normalized-window DataFrames for each window_size.
-    The position in the returned list matches the position in window_sizes.
-    """
-    return [_create_windows(df, size) for size in window_sizes]
+def create_windows(
+    df: pd.DataFrame, window_size: int
+) -> pd.DataFrame:
+    """Wrapper so Kedro node signatures stay clean."""
+    return _create_windows(df, window_size)

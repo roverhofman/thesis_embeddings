@@ -1,20 +1,46 @@
-"""
-This is a boilerplate pipeline 'data_processing'
-generated using Kedro 0.19.12
-"""
+import logging
+from kedro.pipeline import Pipeline, node
 
-from kedro.pipeline import node, Pipeline, pipeline  # noqa
+from .nodes import split_train_val_test, create_windows
 
-from .nodes import create_multiple_windows
 
 def create_pipeline(**kwargs) -> Pipeline:
-    return pipeline([
-        node(
-            func=create_multiple_windows,
-            inputs=["closing_prices", "params:window_sizes"],
-            outputs=[
-                *[f"windows_{size}" for size in [30, 60, 90, 120]]
-            ],
-            name="create_multiple_windows_node"
+    logger = logging.getLogger(__name__)
+    logger.info("Data processing kwargs: %s", kwargs)
+
+    ws = kwargs["window_size"]
+    vf = kwargs["validation_fraction"]
+    tf = kwargs.get("test_fraction", 0.1)
+
+    train_name = f"windows_{ws}_train"
+    val_name = f"windows_{ws}_val"
+    test_name = f"windows_{ws}_test"
+
+    return Pipeline(
+        [
+            node(
+                func=split_train_val_test,
+                inputs=["closing_prices", "params:validation_fraction", "params:test_fraction"],
+                outputs=["train_prices", "val_prices", "test_prices"],
+                name="split_train_val_test_node",
             ),
-        ])
+            node(
+                func=create_windows,
+                inputs=["train_prices", "params:window_size"],
+                outputs=train_name,
+                name="create_train_windows_node",
+            ),
+            node(
+                func=create_windows,
+                inputs=["val_prices", "params:window_size"],
+                outputs=val_name,
+                name="create_val_windows_node",
+            ),
+            node(
+                func=create_windows,
+                inputs=["test_prices", "params:window_size"],
+                outputs=test_name,
+                name="create_test_windows_node",
+            ),
+        ]
+    )

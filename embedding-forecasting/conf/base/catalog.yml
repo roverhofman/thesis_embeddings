@@ -1,29 +1,61 @@
+# conf/base/catalog.yml
+
 closing_prices:
-    type: pandas.CSVDataset
-    filepath: data/01_raw/spx_close.csv
+  type: pandas.CSVDataset
+  filepath: data/01_raw/spx_close.csv
 
-windows_30:
+train_prices:
   type: pandas.ParquetDataset
-  filepath: data/02_intermediate/windows_30.pq
+  filepath: data/02_intermediate/train_prices.pq
 
-windows_60:
+val_prices:
   type: pandas.ParquetDataset
-  filepath: data/02_intermediate/windows_60.pq
+  filepath: data/02_intermediate/val_prices.pq
 
-windows_90:
+test_prices:
   type: pandas.ParquetDataset
-  filepath: data/02_intermediate/windows_90.pq
+  filepath: data/02_intermediate/test_prices.pq
 
-windows_120:
+# Windowed datasets
+windows_${_window_size}_train:
   type: pandas.ParquetDataset
-  filepath: data/02_intermediate/windows_120.pq
+  filepath: data/02_intermediate/windows_${_window_size}_train.pq
 
-node_W90_E32:
+windows_${_window_size}_val:
+  type: pandas.ParquetDataset
+  filepath: data/02_intermediate/windows_${_window_size}_val.pq
+
+windows_${_window_size}_test:
+  type: pandas.ParquetDataset
+  filepath: data/02_intermediate/windows_${_window_size}_test.pq
+
+
+
+# have to add these if I want to pass them into the autoencoder. Have not found a fix.
+# windows_90_train:
+#   type: pandas.ParquetDataset
+#   filepath: data/02_intermediate/windows_90_train.pq
+
+# windows_90_val:
+#   type: pandas.ParquetDataset
+#   filepath: data/02_intermediate/windows_90_val.pq
+
+# windows_90_test:
+#   type: pandas.ParquetDataset
+#   filepath: data/02_intermediate/windows_90_test.pq
+
+node_W${_window_size}_E${_embed_dim}:
   type: kedro_datasets.pickle.PickleDataset
-  filepath: data/06_models/cnn_autoencoder_W90_E32.pkl
+  filepath: data/06_models/cnn_autoencoder_W${_window_size}_E${_embed_dim}.pkl
 
+  # node_W90_E32:
+  # type: kedro_datasets.pickle.PickleDataset
+  # filepath: data/06_models/cnn_autoencoder_W90_E32.pkl
+
+# In-memory holder for your two Matplotlib figures
 autoencoder_plots:
   type: matplotlib.MatplotlibWriter
   filepath: data/08_reporting/autoencoder_plots
   save_args:
     format: png
+
