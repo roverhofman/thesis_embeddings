@@ -1,0 +1,14 @@
+# This is a boilerplate parameters config generated for pipeline 'cnn_autoencoder'
+# using Kedro 0.19.12.
+#
+# Documentation for this file format can be found in "Parameters"
+# Link: https://docs.kedro.org/en/0.19.12/configuration/parameters.html
+
+
+model_options:
+  embed_dim: 32
+  window_size: 90
+  test_size: 0.2
+  random_state: 42
+  epochs: 4
+  batch_size: 32

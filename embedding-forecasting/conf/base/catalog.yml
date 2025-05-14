@@ -1,0 +1,29 @@
+closing_prices:
+    type: pandas.CSVDataset
+    filepath: data/01_raw/spx_close.csv
+
+windows_30:
+  type: pandas.ParquetDataset
+  filepath: data/02_intermediate/windows_30.pq
+
+windows_60:
+  type: pandas.ParquetDataset
+  filepath: data/02_intermediate/windows_60.pq
+
+windows_90:
+  type: pandas.ParquetDataset
+  filepath: data/02_intermediate/windows_90.pq
+
+windows_120:
+  type: pandas.ParquetDataset
+  filepath: data/02_intermediate/windows_120.pq
+
+node_W90_E32:
+  type: kedro_datasets.pickle.PickleDataset
+  filepath: data/06_models/cnn_autoencoder_W90_E32.pkl
+
+autoencoder_plots:
+  type: matplotlib.MatplotlibWriter
+  filepath: data/08_reporting/autoencoder_plots
+  save_args:
+    format: png
