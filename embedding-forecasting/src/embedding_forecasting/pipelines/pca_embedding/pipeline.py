@@ -7,10 +7,10 @@ def create_pipeline(**kwargs) -> Pipeline:
     logger = logging.getLogger(__name__)
     logger.info("Embedding pipeline kwargs: %s", kwargs)
 
-    n_comps = kwargs.get("n_components", 5)
-    train_output = f"pca_train_{n_comps}"
-    val_output = f"pca_val_{n_comps}"
-    test_output = f"pca_test_{n_comps}"
+    n_comps = kwargs.get("n_components", 10)
+    train_output = f"pca_train"
+    val_output = f"pca_val"
+    test_output = f"pca_test"
 
     return Pipeline(
         [

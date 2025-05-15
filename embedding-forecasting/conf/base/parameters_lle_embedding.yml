@@ -1,0 +1,4 @@
+lle_parameters:
+  n_neighbors: 10
+  n_components: 10
+  random_state: 42

@@ -1,0 +1,3 @@
+wavelet_parameters:
+  wavelet: "db1"
+  level: 1

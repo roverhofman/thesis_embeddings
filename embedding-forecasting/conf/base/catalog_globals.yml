@@ -1,3 +1,4 @@
 _window_size: 90
 _embed_dim: 32
+_n_components: 10
 # just for naming, could not find a better way.

@@ -1,30 +1,38 @@
-from sklearn.preprocessing import StandardScaler
+import pandas as pd
 from sklearn.decomposition import PCA
+
+
+def _to_df(arr, original, n_comps):
+    idx = getattr(original, "index", None)
+    cols = [f"PC{i+1}" for i in range(n_comps)]
+    return pd.DataFrame(arr, index=idx, columns=cols)
 
 
 def pca_embedding(train_windows, val_windows, test_windows, n_comps):
     """
-    Apply standard scaling followed by PCA embedding to train, validation, and test windows.
+    Apply PCA embedding to pre-scaled train, validation, and test windows,
+    returning pandas DataFrames.
 
     Args:
-        train_windows (np.ndarray or pandas.DataFrame): Training window data.
-        val_windows (np.ndarray or pandas.DataFrame): Validation window data.
-        test_windows (np.ndarray or pandas.DataFrame): Test window data.
+        train_windows (np.ndarray or pandas.DataFrame): Scaled training window data.
+        val_windows (np.ndarray or pandas.DataFrame): Scaled validation window data.
+        test_windows (np.ndarray or pandas.DataFrame): Scaled test window data.
         n_comps (int): Number of PCA components.
 
     Returns:
-        Tuple of transformed arrays: (train_pca, val_pca, test_pca)
+        Tuple[pd.DataFrame, pd.DataFrame, pd.DataFrame]:
+            PCA-transformed train, validation, and test DataFrames.
     """
-    # Standard scaling
-    scaler = StandardScaler()
-    train_scaled = scaler.fit_transform(train_windows)
-    val_scaled = scaler.transform(val_windows)
-    test_scaled = scaler.transform(test_windows)
-
     # PCA embedding
     pca = PCA(n_components=n_comps)
-    train_pca = pca.fit_transform(train_scaled)
-    val_pca = pca.transform(val_scaled)
-    test_pca = pca.transform(test_scaled)
+    train_pca = pca.fit_transform(train_windows)
+    val_pca = pca.transform(val_windows)
+    test_pca = pca.transform(test_windows)
 
-    return train_pca, val_pca, test_pca
+    # Helper to wrap into DataFrame and preserve index if present
+
+    train_df = _to_df(train_pca, train_windows, n_comps)
+    val_df = _to_df(val_pca, val_windows, n_comps)
+    test_df = _to_df(test_pca, test_windows, n_comps)
+
+    return train_df, val_df, test_df

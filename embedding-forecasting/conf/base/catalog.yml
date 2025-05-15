@@ -32,17 +32,17 @@ windows_${_window_size}_test:
 
 
 # have to add these if I want to pass them into the autoencoder. Have not found a fix.
-# windows_90_train:
-#   type: pandas.ParquetDataset
-#   filepath: data/02_intermediate/windows_90_train.pq
+windows_90_train:
+  type: pandas.ParquetDataset
+  filepath: data/02_intermediate/windows_90_train.pq
 
-# windows_90_val:
-#   type: pandas.ParquetDataset
-#   filepath: data/02_intermediate/windows_90_val.pq
+windows_90_val:
+  type: pandas.ParquetDataset
+  filepath: data/02_intermediate/windows_90_val.pq
 
-# windows_90_test:
-#   type: pandas.ParquetDataset
-#   filepath: data/02_intermediate/windows_90_test.pq
+windows_90_test:
+  type: pandas.ParquetDataset
+  filepath: data/02_intermediate/windows_90_test.pq
 
 node_W${_window_size}_E${_embed_dim}:
   type: kedro_datasets.pickle.PickleDataset
@@ -58,4 +58,78 @@ autoencoder_plots:
   filepath: data/08_reporting/autoencoder_plots
   save_args:
     format: png
+
+#PCA EMBEDDINGS
+pca_train:
+  type: pandas.ParquetDataset
+  filepath: data/02_intermediate/pca_embeddings/pca_train_${_n_components}.pq
+
+pca_val:
+  type: pandas.ParquetDataset
+  filepath: data/02_intermediate/pca_embeddings/pca_val_${_n_components}.pq
+
+pca_test:
+  type: pandas.ParquetDataset
+  filepath: data/02_intermediate/pca_embeddings/pca_test_${_n_components}.pq
+
+#PCA EMBEDDINGS
+lle_train:
+  type: pandas.ParquetDataset
+  filepath: data/02_intermediate/lle_embeddings/lle_train_${_n_components}.pq
+
+lle_val:
+  type: pandas.ParquetDataset
+  filepath: data/02_intermediate/lle_embeddings/lle_val_${_n_components}.pq
+
+lle_test:
+  type: pandas.ParquetDataset
+  filepath: data/02_intermediate/lle_embeddings/lle_test_${_n_components}.pq
+
+#UMAP EMBEDDINGS
+umap_train:
+  type: pandas.ParquetDataset
+  filepath: data/02_intermediate/umap_embeddings/umap_train.pq
+
+umap_val:
+  type: pandas.ParquetDataset
+  filepath: data/02_intermediate/umap_embeddings/umap_val.pq
+
+umap_test:
+  type: pandas.ParquetDataset
+  filepath: data/02_intermediate/umap_embeddings/umap_test.pq
+
+#WAVELET EMBEDDINGS
+wavelet_train:
+  type: pandas.ParquetDataset
+  filepath: data/02_intermediate/wavelet_embeddings/wavelet_train.pq
+
+wavelet_val:
+  type: pandas.ParquetDataset
+  filepath: data/02_intermediate/wavelet_embeddings/wavelet_val.pq
+
+wavelet_test:
+  type: pandas.ParquetDataset
+  filepath: data/02_intermediate/wavelet_embeddings/wavelet_test.pq
+
+#FFT EMBEDDINGS
+fft_train:
+  type: pandas.ParquetDataset
+  filepath: data/02_intermediate/fft_embeddings/fft_train.pq
+
+fft_val:
+  type: pandas.ParquetDataset
+  filepath: data/02_intermediate/fft_embeddings/fft_val.pq
+
+fft_test:
+  type: pandas.ParquetDataset
+  filepath: data/02_intermediate/fft_embeddings/fft_test.pq
+
+
+
+
+
+
+
+
+
 
