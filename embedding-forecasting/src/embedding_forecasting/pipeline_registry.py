@@ -6,6 +6,8 @@ from .pipelines.lle_embedding.pipeline import create_pipeline as lle_embedding
 from .pipelines.umap_embedding.pipeline import create_pipeline as umap_embedding
 from .pipelines.wavelet_embedding.pipeline import create_pipeline as wavelet_embedding
 from .pipelines.fft_embedding.pipeline import create_pipeline as fft_embedding
+from .pipelines.graph_embedding.pipeline import create_pipeline as graph_embedding
+from .pipelines.tda_embedding.pipeline import create_pipeline as tda_embedding
 
 def register_pipelines():
    session = KedroSession.create()
@@ -19,6 +21,8 @@ def register_pipelines():
    umap_emb_pipe = umap_embedding(**params)
    wavelet_emb_pipe = wavelet_embedding(**params)
    fft_emb_pipe = fft_embedding(**params)
+   graph_emb_pipe = graph_embedding(**params)
+   tda_emb_pipe = tda_embedding(**params)
 
    return {
      "data_processing": dp_pipe,
@@ -28,5 +32,7 @@ def register_pipelines():
      "umap_embedding": umap_emb_pipe,
      "wavelet_embedding": wavelet_emb_pipe,
      "fft_embedding": fft_emb_pipe,
-     "__default__": dp_pipe + cnn_pipe + emb_pipe + lle_emb_pipe + umap_emb_pipe + wavelet_emb_pipe + fft_emb_pipe,
+     "graph_embedding": graph_emb_pipe,
+     "tda_embedding": tda_emb_pipe,
+     "__default__": dp_pipe + cnn_pipe + emb_pipe + lle_emb_pipe + umap_emb_pipe + wavelet_emb_pipe + fft_emb_pipe + graph_emb_pipe + tda_emb_pipe,
    }

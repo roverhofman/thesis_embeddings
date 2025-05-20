@@ -124,8 +124,32 @@ fft_test:
   type: pandas.ParquetDataset
   filepath: data/02_intermediate/fft_embeddings/fft_test.pq
 
+#GRAPH EMBEDDINGS
+graph_train:
+  type: pandas.ParquetDataset
+  filepath: data/02_intermediate/graph_embeddings/graph_train.pq
+
+graph_val:
+  type: pandas.ParquetDataset
+  filepath: data/02_intermediate/graph_embeddings/graph_val.pq
+
+graph_test:
+  type: pandas.ParquetDataset
+  filepath: data/02_intermediate/graph_embeddings/graph_test.pq
 
 
+#TDA EMBEDDINGS
+tda_train:
+  type: pandas.ParquetDataset
+  filepath: data/02_intermediate/tda_embeddings/tda_train.pq
+
+tda_val:
+  type: pandas.ParquetDataset
+  filepath: data/02_intermediate/tda_embeddings/tda_val.pq
+
+tda_test:
+  type: pandas.ParquetDataset
+  filepath: data/02_intermediate/tda_embeddings/tda_test.pq
 
 
 
