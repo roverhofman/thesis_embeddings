@@ -8,6 +8,14 @@ from .pipelines.wavelet_embedding.pipeline import create_pipeline as wavelet_emb
 from .pipelines.fft_embedding.pipeline import create_pipeline as fft_embedding
 from .pipelines.graph_embedding.pipeline import create_pipeline as graph_embedding
 from .pipelines.tda_embedding.pipeline import create_pipeline as tda_embedding
+from .pipelines.gaf_imaging.pipeline import create_pipeline as gaf_imaging
+from .pipelines.mtf_imaging.pipeline import create_pipeline as mtf_imaging
+from .pipelines.rp_imaging.pipeline import create_pipeline as rp_imaging
+from .pipelines.clip_embedding.pipeline import create_pipeline as clip_embedding
+from .pipelines.dino_embedding.pipeline import create_pipeline as dino_embedding
+from .pipelines.resnet_embedding.pipeline import create_pipeline as resnet_embedding
+
+
 
 def register_pipelines():
    session = KedroSession.create()
@@ -23,6 +31,12 @@ def register_pipelines():
    fft_emb_pipe = fft_embedding(**params)
    graph_emb_pipe = graph_embedding(**params)
    tda_emb_pipe = tda_embedding(**params)
+   gaf_img_pipe = gaf_imaging(**params)
+   mtf_img_pipe = mtf_imaging(**params)
+   rp_img_pipe = rp_imaging(**params)
+   clip_emb_pipe = clip_embedding(**params)
+   dino_emb_pipe = dino_embedding(**params)
+   resnet_emb_pipe = resnet_embedding(**params)
 
    return {
      "data_processing": dp_pipe,
@@ -34,5 +48,11 @@ def register_pipelines():
      "fft_embedding": fft_emb_pipe,
      "graph_embedding": graph_emb_pipe,
      "tda_embedding": tda_emb_pipe,
-     "__default__": dp_pipe + cnn_pipe + emb_pipe + lle_emb_pipe + umap_emb_pipe + wavelet_emb_pipe + fft_emb_pipe + graph_emb_pipe + tda_emb_pipe,
+     "gaf_imaging": gaf_img_pipe,
+     "mtf_imaging": mtf_img_pipe,
+     "rp_imaging": rp_img_pipe,
+     "clip_embedding": clip_emb_pipe,
+     "dino_embedding": dino_emb_pipe,
+     "resnet_embedding": resnet_emb_pipe,
+     "__default__": dp_pipe + cnn_pipe + emb_pipe + lle_emb_pipe + umap_emb_pipe + wavelet_emb_pipe + fft_emb_pipe + graph_emb_pipe + tda_emb_pipe + gaf_img_pipe + mtf_img_pipe + rp_img_pipe,
    }

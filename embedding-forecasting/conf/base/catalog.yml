@@ -151,9 +151,153 @@ tda_test:
   type: pandas.ParquetDataset
   filepath: data/02_intermediate/tda_embeddings/tda_test.pq
 
+#GAF IMAGES
+gaf_train:
+  type: pickle.PickleDataset
+  filepath: data/02_intermediate/images/gaf_train.pkl
+
+gaf_val:
+  type: pickle.PickleDataset
+  filepath: data/02_intermediate/images/gaf_val.pkl
+
+gaf_test:
+  type: pickle.PickleDataset
+  filepath: data/02_intermediate/images/gaf_test.pkl
 
 
+#MTF IMAGES
+mtf_train:
+  type: pickle.PickleDataset
+  filepath: data/02_intermediate/images/mtf_train.pkl
 
+mtf_val:
+  type: pickle.PickleDataset
+  filepath: data/02_intermediate/images/mtf_val.pkl
 
+mtf_test:
+  type: pickle.PickleDataset
+  filepath: data/02_intermediate/images/mtf_test.pkl
 
+#RP IMAGES
+rp_train:
+  type: pickle.PickleDataset
+  filepath: data/02_intermediate/images/rp_train.pkl
 
+rp_val:
+  type: pickle.PickleDataset
+  filepath: data/02_intermediate/images/rp_val.pkl
+
+rp_test:
+  type: pickle.PickleDataset
+  filepath: data/02_intermediate/images/rp_test.pkl
+
+#GAF EMBEDDINGS
+gaf_clip_train:
+  type: pickle.PickleDataset
+  filepath: data/02_intermediate/clip/gaf_clip_train.pkl
+
+gaf_clip_val:
+  type: pickle.PickleDataset
+  filepath: data/02_intermediate/clip/gaf_clip_val.pkl
+
+gaf_clip_test:
+  type: pickle.PickleDataset
+  filepath: data/02_intermediate/clip/gaf_clip_test.pkl
+
+mtf_clip_train:
+  type: pickle.PickleDataset
+  filepath: data/02_intermediate/clip/mtf_clip_train.pkl
+
+mtf_clip_val:
+  type: pickle.PickleDataset
+  filepath: data/02_intermediate/clip/mtf_clip_val.pkl
+
+mtf_clip_test:
+  type: pickle.PickleDataset
+  filepath: data/02_intermediate/clip/mtf_clip_test.pkl
+
+rp_clip_train:
+  type: pickle.PickleDataset
+  filepath: data/02_intermediate/clip/rp_clip_train.pkl
+
+rp_clip_val:
+  type: pickle.PickleDataset
+  filepath: data/02_intermediate/clip/rp_clip_val.pkl
+
+rp_clip_test:
+  type: pickle.PickleDataset
+  filepath: data/02_intermediate/clip/rp_clip_test.pkl
+
+#DINO EMBEDDINGS
+gaf_dino_train:
+  type: pickle.PickleDataset
+  filepath: data/02_intermediate/dino/gaf_dino_train.pkl
+
+gaf_dino_val:
+  type: pickle.PickleDataset
+  filepath: data/02_intermediate/dino/gaf_dino_val.pkl
+
+gaf_dino_test:
+  type: pickle.PickleDataset
+  filepath: data/02_intermediate/dino/gaf_dino_test.pkl
+
+mtf_dino_train:
+  type: pickle.PickleDataset
+  filepath: data/02_intermediate/dino/mtf_dino_train.pkl
+
+mtf_dino_val:
+  type: pickle.PickleDataset
+  filepath: data/02_intermediate/dino/mtf_dino_val.pkl
+
+mtf_dino_test:
+  type: pickle.PickleDataset
+  filepath: data/02_intermediate/dino/mtf_dino_test.pkl
+
+rp_dino_train:
+  type: pickle.PickleDataset
+  filepath: data/02_intermediate/dino/rp_dino_train.pkl
+
+rp_dino_val:
+  type: pickle.PickleDataset
+  filepath: data/02_intermediate/dino/rp_dino_val.pkl
+
+rp_dino_test:
+  type: pickle.PickleDataset
+  filepath: data/02_intermediate/dino/rp_dino_test.pkl
+
+#RESNET EMBEDDINGS
+gaf_resnet_train:
+  type: pickle.PickleDataset
+  filepath: data/02_intermediate/resnet/gaf_resnet_train.pkl
+
+gaf_resnet_val:
+  type: pickle.PickleDataset
+  filepath: data/02_intermediate/resnet/gaf_resnet_val.pkl
+
+gaf_resnet_test:
+  type: pickle.PickleDataset
+  filepath: data/02_intermediate/resnet/gaf_resnet_test.pkl
+
+mtf_resnet_train:
+  type: pickle.PickleDataset
+  filepath: data/02_intermediate/resnet/mtf_resnet_train.pkl
+
+mtf_resnet_val:
+  type: pickle.PickleDataset
+  filepath: data/02_intermediate/resnet/mtf_resnet_val.pkl
+
+mtf_resnet_test:
+  type: pickle.PickleDataset
+  filepath: data/02_intermediate/resnet/mtf_resnet_test.pkl
+
+rp_resnet_train:
+  type: pickle.PickleDataset
+  filepath: data/02_intermediate/resnet/rp_resnet_train.pkl
+
+rp_resnet_val:
+  type: pickle.PickleDataset
+  filepath: data/02_intermediate/resnet/rp_resnet_val.pkl
+
+rp_resnet_test:
+  type: pickle.PickleDataset
+  filepath: data/02_intermediate/resnet/rp_resnet_test.pkl
