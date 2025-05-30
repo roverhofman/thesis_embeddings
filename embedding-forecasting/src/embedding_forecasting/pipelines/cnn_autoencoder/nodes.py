@@ -6,13 +6,15 @@ from tensorflow.keras import layers, models
 import logging
 import matplotlib.pyplot as plt
 from sklearn.decomposition import PCA
-from typing import Dict
+from typing import Dict, Tuple
+
 
 def _set_global_seed(seed: int):
     """Seed python, numpy, and TF for reproducibility."""
     random.seed(seed)
     np.random.seed(seed)
     tf.random.set_seed(seed)
+
 
 def _build_cnn_autoencoder(window_size: int, embed_dim: int) -> models.Model:
     """Builds a 1D CNN autoencoder model for a given window length and embedding size."""
@@ -36,6 +38,7 @@ def _build_cnn_autoencoder(window_size: int, embed_dim: int) -> models.Model:
     autoencoder = models.Model(encoder_input, decoder_output)
     autoencoder.compile(optimizer="adam", loss="mse")
     return autoencoder
+
 
 def train_cnn_autoencoder(
     train_window: pd.DataFrame,
@@ -68,6 +71,7 @@ def train_cnn_autoencoder(
     )
     return model
 
+
 def evaluate_cnn_autoencoder(
     model: models.Model,
     train_window: pd.DataFrame,
@@ -85,6 +89,7 @@ def evaluate_cnn_autoencoder(
 
     logger = logging.getLogger(__name__)
     logger.info(f"train_mse: {train_loss:.5f} | val_mse: {val_loss:.5f}")
+
 
 def visualize_autoencoder(
     model: models.Model,
@@ -116,7 +121,7 @@ def visualize_autoencoder(
     ax1.legend(frameon=True, shadow=True)
     fig1.tight_layout()
 
-    # PCA of embeddings
+    # PCA of embeddings for visualization
     encoder = models.Model(inputs=model.input,
                            outputs=model.get_layer("embedding").output)
     embeds = encoder.predict(X, batch_size=parameters["batch_size"])
@@ -144,3 +149,40 @@ def visualize_autoencoder(
         "reconstruction.png": fig1,
         "pca.png": fig2
     }
+
+
+def save_cnn_embeddings(
+    model: models.Model,
+    train_window: pd.DataFrame,
+    val_window: pd.DataFrame,
+    test_window: pd.DataFrame,
+    parameters: Dict
+) -> Tuple[pd.DataFrame, pd.DataFrame, pd.DataFrame]:
+    """
+    Extract and save embeddings for train, validation, and test windows.
+    """
+    # Prepare data
+    X_train = train_window.values.astype("float32")[..., np.newaxis]
+    X_val   = val_window.values.astype("float32")[..., np.newaxis]
+    X_test  = test_window.values.astype("float32")[..., np.newaxis]
+
+    # Build encoder
+    encoder = models.Model(inputs=model.input,
+                           outputs=model.get_layer("embedding").output)
+
+    # Predict embeddings
+    emb_train = encoder.predict(X_train, batch_size=parameters["batch_size"])
+    emb_val   = encoder.predict(X_val,   batch_size=parameters["batch_size"])
+    emb_test  = encoder.predict(X_test,  batch_size=parameters["batch_size"])
+
+    # Wrap into DataFrames
+    idx_train = getattr(train_window, "index", None)
+    idx_val   = getattr(val_window,   "index", None)
+    idx_test  = getattr(test_window,  "index", None)
+    cols = [f"EMB{i+1}" for i in range(parameters["embed_dim"])]
+
+    df_train = pd.DataFrame(emb_train, index=idx_train, columns=cols)
+    df_val   = pd.DataFrame(emb_val,   index=idx_val,   columns=cols)
+    df_test  = pd.DataFrame(emb_test,  index=idx_test,  columns=cols)
+
+    return df_train, df_val, df_test

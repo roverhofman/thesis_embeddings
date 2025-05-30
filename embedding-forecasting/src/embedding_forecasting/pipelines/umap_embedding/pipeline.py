@@ -1,5 +1,3 @@
-# pipeline.py
-
 import logging
 from kedro.pipeline import Pipeline, node
 from .nodes import umap_embedding
@@ -31,6 +29,7 @@ def create_pipeline(**kwargs) -> Pipeline:
                     f"windows_{kwargs['window_size']}_train",
                     f"windows_{kwargs['window_size']}_val",
                     f"windows_{kwargs['window_size']}_test",
+                    "params:n_components",
                 ],
                 outputs=[train_output, val_output, test_output],
                 name="umap_embedding_node",

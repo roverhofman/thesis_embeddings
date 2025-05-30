@@ -14,6 +14,8 @@ from .pipelines.rp_imaging.pipeline import create_pipeline as rp_imaging
 from .pipelines.clip_embedding.pipeline import create_pipeline as clip_embedding
 from .pipelines.dino_embedding.pipeline import create_pipeline as dino_embedding
 from .pipelines.resnet_embedding.pipeline import create_pipeline as resnet_embedding
+from .pipelines.volatility_classification.pipeline import create_pipeline as volatility_classification
+from .pipelines.fusion_volatility_classification.pipeline import create_pipeline as fusion_volatility_classification
 
 
 
@@ -37,6 +39,8 @@ def register_pipelines():
    clip_emb_pipe = clip_embedding(**params)
    dino_emb_pipe = dino_embedding(**params)
    resnet_emb_pipe = resnet_embedding(**params)
+   vol_class_pipe = volatility_classification(**params)
+   fusion_vol_class_pipe = fusion_volatility_classification(**params)
 
    return {
      "data_processing": dp_pipe,
@@ -54,5 +58,7 @@ def register_pipelines():
      "clip_embedding": clip_emb_pipe,
      "dino_embedding": dino_emb_pipe,
      "resnet_embedding": resnet_emb_pipe,
+     "volatility_classification": vol_class_pipe,
+     "fusion_volatility_classification": fusion_vol_class_pipe,
      "__default__": dp_pipe + cnn_pipe + emb_pipe + lle_emb_pipe + umap_emb_pipe + wavelet_emb_pipe + fft_emb_pipe + graph_emb_pipe + tda_emb_pipe + gaf_img_pipe + mtf_img_pipe + rp_img_pipe,
    }

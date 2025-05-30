@@ -52,6 +52,19 @@ node_W${_window_size}_E${_embed_dim}:
   # type: kedro_datasets.pickle.PickleDataset
   # filepath: data/06_models/cnn_autoencoder_W90_E32.pkl
 
+#AE EMBEDDINGS
+autoencoder_train:
+  type: pandas.ParquetDataset
+  filepath: data/02_intermediate/ae_embeddings/autoencoder_train.pq
+
+autoencoder_val:
+  type: pandas.ParquetDataset
+  filepath: data/02_intermediate/ae_embeddings/autoencoder_val.pq
+
+autoencoder_test:
+  type: pandas.ParquetDataset
+  filepath: data/02_intermediate/ae_embeddings/autoencoder_test.pq
+
 # In-memory holder for your two Matplotlib figures
 autoencoder_plots:
   type: matplotlib.MatplotlibWriter
@@ -301,3 +314,15 @@ rp_resnet_val:
 rp_resnet_test:
   type: pickle.PickleDataset
   filepath: data/02_intermediate/resnet/rp_resnet_test.pkl
+
+
+# VOLITILITY CLASSIFICATION
+vol_embeddings_scores:
+  type: pickle.PickleDataset
+  filepath: data/07_model_output/vol_embeddings_scores.pkl
+
+# FUSION VOLITILITY CLASSIFICATION
+fusion_vol_embeddings_scores:
+  type: pickle.PickleDataset
+  filepath: data/07_model_output/fusion_vol_embeddings_scores.pkl
+

@@ -12,7 +12,7 @@ def _to_df(arr, original, n_components):
     cols = [f"UMAP{i+1}" for i in range(n_components)]
     return pd.DataFrame(arr, index=idx, columns=cols)
 
-def umap_embedding(train_df, val_df, test_df):
+def umap_embedding(train_df, val_df, test_df, n_comps):
     """
     Apply UMAP embedding to train / validation / test DataFrames.
 
@@ -25,7 +25,7 @@ def umap_embedding(train_df, val_df, test_df):
         Tuple[pd.DataFrame, pd.DataFrame, pd.DataFrame]:
           UMAP-transformed train, validation, and test.
     """
-    umap_model = umap.UMAP()
+    umap_model = umap.UMAP(n_components=n_comps)
     train_umap = umap_model.fit_transform(train_df)
     val_umap   = umap_model.transform(val_df)
     test_umap  = umap_model.transform(test_df)
